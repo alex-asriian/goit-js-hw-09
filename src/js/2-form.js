@@ -5,7 +5,7 @@ let formData = {
 
 const form = document.querySelector(".feedback-form");
 const storageKey = "feedback-form-state";
-const data = localStorage.getItem("feedback-form-state");
+const data = localStorage.getItem(storageKey);
 if (data) {
     const savedData = JSON.parse(data);
     formData = savedData;
@@ -14,9 +14,9 @@ form.elements.message.value = savedData.message;
 }
 form.addEventListener("input", (event) => {
     const name = event.target.name;
-    const value = event.target.value.trim()     ;
+    const value = event.target.value;
     formData[name] = value;
-    localStorage.setItem("feedback-form-state", JSON.stringify(formData));
+    localStorage.setItem(storageKey, JSON.stringify(formData));
 });
 
   
@@ -24,14 +24,12 @@ form.addEventListener("input", (event) => {
 
 form.addEventListener("submit", (event) => {
     event.preventDefault();
-    const trimmedData = {
-    email: formData.email.trim(),
-    message: formData.message.trim(),
-  };
-    if (trimmedData.email === "" || trimmedData.message === "") {
+   
+    if (formData.email.trim() === "" || formData.message.trim() === "") {
         return alert("Fill please all fields")
     }
-    console.log(trimmedData);
+   console.log(formData);
+   
     
     localStorage.removeItem(storageKey);
 formData = {email: "",message: "",}
